@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Invited! 🎉 Birthday Party</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotateZ(720deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+        }
+
+        .invitation-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: slideUp 0.8s ease;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header Section */
+        .invitation-header {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFC75F 100%);
+            padding: 50px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balloons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            border-radius: 50% 50% 50% 0;
+            animation: float 4s infinite;
+            opacity: 0.8;
+        }
+
+        .balloon1 {
+            background: #FF6B9D;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .balloon2 {
+            background: #FFC75F;
+            left: 30%;
+            animation-delay: 1s;
+        }
+
+        .balloon3 {
+            background: #667eea;
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        .balloon4 {
+            background: #764ba2;
+            left: 70%;
+            animation-delay: 1.5s;
+        }
+
+        .balloon5 {
+            background: #FF6B9D;
+            left: 85%;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                bottom: 0;
+            }
+            50% {
+                bottom: 30px;
+            }
+        }
+
+        .invitation-header h1 {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .invitation-header p {
+            font-size: 20px;
+            color: white;
+            position: relative;
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .emoji-large {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        /* Content Section */
+        .invitation-content {
+            padding: 40px 30px;
+            color: #333;
+        }
+
+        .content-row {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .content-emoji {
+            font-size: 32px;
+            min-width: 40px;
+        }
+
+        .content-text {
+            flex: 1;
+        }
+
+        .content-text h2 {
+            color: #FF6B9D;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .content-text p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .content-text strong {
+            color: #333;
+            font-size: 17px;
+        }
+
+        .divider {
+            border-top: 2px dashed #FFB6C1;
+            margin: 30px 0;
+        }
+
+        /* RSVP Section */
+        .rsvp-section {
+            background: linear-gradient(135deg, #f5f5f5 0%, #fff 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .rsvp-section h3 {
+            color: #FF6B9D;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .rsvp-options {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .rsvp-btn {
+            padding: 12px 25px;
+            border: 2px solid #FF6B9D;
+            background: white;
+            color: #FF6B9D;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .rsvp-btn:hover {
+            background: #FF6B9D;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .rsvp-btn.accept {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFC75F 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .rsvp-btn.accept:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        /* Footer */
+        .invitation-footer {
+            background: #f5f5f5;
+            padding: 20px 30px;
+            text-align: center;
+            border-top: 2px dashed #FFB6C1;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Modal for RSVP */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-content h2 {
+            color: #FF6B9D;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #FFB6C1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #FF6B9D;
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFC75F 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #FF6B9D;
+        }
+
+        .modal-content {
+            position: relative;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .invitation-header h1 {
+                font-size: 36px;
+            }
+
+            .invitation-header p {
+                font-size: 16px;
+            }
+
+            .emoji-large {
+                font-size: 40px;
+            }
+
+            .content-text h2 {
+                font-size: 18px;
+            }
+
+            .content-text p {
+                font-size: 14px;
+            }
+
+            .invitation-content {
+                padding: 25px 20px;
+            }
+
+            .modal-content {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="invitation-card">
+            <!-- Header -->
+            <div class="invitation-header">
+                <div class="balloons">
+                    <div class="balloon balloon1"></div>
+                    <div class="balloon balloon2"></div>
+                    <div class="balloon balloon3"></div>
+                    <div class="balloon balloon4"></div>
+                    <div class="balloon balloon5"></div>
+                </div>
+                <div class="emoji-large">🎉</div>
+                <h1>YOU'RE INVITED!</h1>
+                <p>Join us for an amazing Birthday Celebration 🎂</p>
+            </div>
+
+            <!-- Content -->
+            <div class="invitation-content">
+                <!-- Birthday Person -->
+                <div class="content-row">
+                    <div class="content-emoji">🎈</div>
+                    <div class="content-text">
+                        <h2>Birthday Star</h2>
+                        <p><strong id="birthdayPerson">Alex Johnson</strong> is turning 25!</p>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Date & Time -->
+                <div class="content-row">
+                    <div class="content-emoji">📅</div>
+                    <div class="content-text">
+                        <h2>When?</h2>
+                        <p><strong>Saturday, March 15th, 2024</strong></p>
+                        <p>6:00 PM - 11:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Location -->
+                <div class="content-row">
+                    <div class="content-emoji">📍</div>
+                    <div class="content-text">
+                        <h2>Where?</h2>
+                        <p><strong>The Grand Ballroom</strong></p>
+                        <p>123 Celebration Street<br>Party City, PC 12345</p>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Dress Code -->
+                <div class="content-row">
+                    <div class="content-emoji">👔</div>
+                    <div class="content-text">
+                        <h2>Dress Code</h2>
+                        <p>Smart Casual - Come dressed to party!</p>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Special Notes -->
+                <div class="content-row">
+                    <div class="content-emoji">✨</div>
+                    <div class="content-text">
+                        <h2>What to Expect</h2>
+                        <p>🎂 Delicious Cake & Refreshments<br>
+                           🎵 Great Music & Dancing<br>
+                           🎮 Fun Games & Activities<br>
+                           📸 Photo Booth Fun</p>
+                    </div>
+                </div>
+
+                <!-- RSVP Section -->
+                <div class="rsvp-section">
+                    <h3>Will you be there? 🥳</h3>
+                    <div class="rsvp-options">
+                        <button class="rsvp-btn accept" onclick="openRSVP('yes')">✓ Yes, I'm Coming!</button>
+                        <button class="rsvp-btn" onclick="openRSVP('maybe')">? Maybe</button>
+                        <button class="rsvp-btn" onclick="openRSVP('no')">✗ Can't Make It</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="invitation-footer">
+                <p>📬 Please RSVP by March 10th, 2024</p>
+                <p>Questions? Contact us at: party@example.com | 📱 (555) 123-4567</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- RSVP Modal -->
+    <div class="modal" id="rsvpModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">You're Coming! 🎉</h2>
+            
+            <div class="success-message" id="successMsg">
+                ✓ RSVP Submitted Successfully!
+            </div>
+
+            <form id="rsvpForm" onsubmit="submitRSVP(event)">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number (optional)">
+                </div>
+
+                <div class="form-group">
+                    <label for="guests">Number of Guests</label>
+                    <input type="number" id="guests" min="1" max="5" value="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dietary">Dietary Restrictions</label>
+                    <input type="text" id="dietary" placeholder="e.g., Vegetarian, Gluten-free, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Special Message for the Birthday Star</label>
+                    <textarea id="message" placeholder="Write your birthday wishes here!"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit RSVP</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const rsvpModal = document.getElementById('rsvpModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const successMsg = document.getElementById('successMsg');
+        const rsvpForm = document.getElementById('rsvpForm');
+
+        function openRSVP(response) {
+            rsvpModal.classList.add('active');
+            
+            const titles = {
+                'yes': "🎉 You're Coming!",
+                'maybe': "🤔 Let us know...",
+                'no': "😢 We'll miss you!"
+            };
+
+            modalTitle.textContent = titles[response];
+            rsvpForm.dataset.response = response;
+            successMsg.classList.remove('show');
+        }
+
+        function closeModal() {
+            rsvpModal.classList.remove('active');
+            rsvpForm.reset();
+            successMsg.classList.remove('show');
+        }
+
+        function submitRSVP(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const guests = document.getElementById('guests').value;
+            const dietary = document.getElementById('dietary').value;
+            const message = document.getElementById('message').value;
+            const response = rsvpForm.dataset.response;
+
+            const rsvpData = {
+                name,
+                email,
+                phone,
+                guests,
+                dietary,
+                message,
+                response,
+                timestamp: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            const allRSVPs = JSON.parse(localStorage.getItem('birthdayRSVPs') || '[]');
+            allRSVPs.push(rsvpData);
+            localStorage.setItem('birthdayRSVPs', JSON.stringify(allRSVPs));
+
+            // Show success message
+            successMsg.classList.add('show');
+
+            // Create confetti effect
+            createConfetti();
+
+            // Reset form and close after 2 seconds
+            setTimeout(() => {
+                rsvpForm.reset();
+                closeModal();
+            }, 2000);
+
+            console.log('RSVP Data:', rsvpData);
+        }
+
+        function createConfetti() {
+            const colors = ['🎉', '🎂', '🎈', '🎁', '✨', '🎊'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.innerHTML = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-20px';
+                    confetti.style.fontSize = Math.random() * 20 + 20 + 'px';
+                    confetti.style.animation = `confetti-fall ${Math.random() * 2 + 2}s ease-in forwards`;
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === rsvpModal) {
+                closeModal();
+            }
+        });
+
+        // Create initial confetti on page load
+        window.addEventListener('load', () => {
+            createConfetti();
+        });
+
+        // Optional: Customize the invitation
+        function customizeInvitation(config) {
+            if (config.name) {
+                document.getElementById('birthdayPerson').textContent = config.name;
+            }
+        }
+
+        // Example customization:
+        // customizeInvitation({ name: 'Your Friend\'s Name' });
+    </script>
+</body>
+</html>
